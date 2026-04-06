@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Path2Possibility — Student-Led. Community-Driven. National in Vision.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #08172d;
+      --navy-2: #0d2342;
+      --navy-3: #16345e;
+      --gold: #c9a24a;
+      --gold-2: #e3bd66;
+      --cream: #f8f5ee;
+      --white: #ffffff;
+      --text: #10223d;
+      --muted: #5f6f87;
+      --line: rgba(8, 23, 45, 0.1);
+      --shadow: 0 20px 60px rgba(8, 23, 45, 0.14);
+      --shadow-soft: 0 10px 30px rgba(8, 23, 45, 0.08);
+      --radius: 24px;
+      --max: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: linear-gradient(180deg, #fbfaf7 0%, #f5f1e7 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .serif { font-family: 'Playfair Display', Georgia, serif; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.8;
+    }
+
+    .section {
+      padding: 96px 0;
+      position: relative;
+    }
+
+    .section-title {
+      margin: 14px 0 16px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      color: var(--navy);
+      letter-spacing: -0.04em;
+    }
+
+    .section-lead {
+      max-width: 720px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 100%);
+      color: var(--navy);
+      box-shadow: 0 14px 30px rgba(201, 162, 74, 0.28);
+    }
+    .btn-primary:hover { box-shadow: 0 20px 40px rgba(201, 162, 74, 0.35); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border-color: rgba(255,255,255,0.16);
+      backdrop-filter: blur(10px);
+    }
+    .btn-light {
+      background: var(--white);
+      color: var(--navy);
+      box-shadow: var(--shadow-soft);
+      border-color: rgba(8, 23, 45, 0.06);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      backdrop-filter: blur(16px);
+      background: rgba(8, 23, 45, 0.78);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+      cursor: pointer;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background:
+        linear-gradient(145deg, rgba(201,162,74,0.25), rgba(201,162,74,0.08)),
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid rgba(201,162,74,0.35);
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      inset: 9px 11px 9px 11px;
+      border-left: 2px solid var(--gold-2);
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 9px;
+      width: 8px;
+      height: 22px;
+      border-radius: 99px;
+      background: linear-gradient(180deg, var(--gold-2), transparent 85%);
+      transform: skewX(-18deg);
+    }
+
+    .brand-text {
+      color: var(--white);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    .brand-text span { color: var(--gold-2); }
+
+    nav ul {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.76);
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    nav a:hover { color: var(--gold-2); }
+
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .mobile-toggle { display: none; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 80% 18%, rgba(201,162,74,0.18), transparent 22%),
+        radial-gradient(circle at 18% 80%, rgba(35,75,130,0.45), transparent 28%),
+        linear-gradient(180deg, #08172d 0%, #0d2342 100%);
+      color: var(--white);
+      padding: 76px 0 56px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 120px 120px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 80%);
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+      min-height: calc(100vh - 140px);
+    }
+
+    .hero-copy h1 {
+      margin: 18px 0;
+      font-size: clamp(3rem, 7vw, 6.4rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      max-width: 760px;
+    }
+
+    .hero-copy h1 .accent { color: var(--gold-2); }
+
+    .hero-copy p {
+      margin: 0 0 28px;
+      max-width: 640px;
+      font-size: 18px;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.76);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .meta-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.84);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .hero-panel {
+      position: relative;
+      padding: 26px;
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -1px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold-2), transparent);
+      opacity: 0.9;
+    }
+
+    .panel-path {
+      height: 260px;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(201,162,74,0.22), transparent 20%),
+        linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.015)),
+        linear-gradient(180deg, #0f2a4f 0%, #0a1b35 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .panel-path::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      left: 50%;
+      top: 62%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      border-radius: 50%;
+      border: 22px solid rgba(255,255,255,0.05);
+      border-right-color: rgba(201,162,74,0.8);
+      border-bottom-color: rgba(227,189,102,0.95);
+      box-shadow: inset 0 0 60px rgba(255,255,255,0.03);
+    }
+
+    .panel-path::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--gold-2);
+      left: 69%;
+      top: 20%;
+      box-shadow: 0 0 0 10px rgba(227,189,102,0.12), 0 0 40px rgba(227,189,102,0.45);
+    }
+
+    .floating-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .mini-card {
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .mini-card .label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.58);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1;
+      color: var(--gold-2);
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .mini-card span {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(8,23,45,0.06);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+      border-color: rgba(201,162,74,0.35);
+    }
+
+    .card-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(201,162,74,0.18), rgba(201,162,74,0.08));
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      line-height: 1.15;
+      color: var(--navy);
+      letter-spacing: -0.03em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      align-items: stretch;
+    }
+
+    .dark-band {
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .dark-band .section-title { color: var(--white); }
+    .dark-band .section-lead { color: rgba(255,255,255,0.68); }
+
+    .reasons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .reason {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .reason h4 {
+      margin: 0 0 10px;
+      color: var(--gold-2);
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .reason p {
+      margin: 0;
+      font-size: 14px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.75;
+    }
+
+    .partner-card {
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.88));
+      border: 1px solid rgba(8,23,45,0.06);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .partner-top {
+      background: linear-gradient(160deg, #102a4c, #08172d);
+      color: var(--white);
+      padding: 30px;
+      position: relative;
+    }
+
+    .partner-top::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -50px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,162,74,0.24), transparent 70%);
+    }
+
+    .partner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(201,162,74,0.14);
+      color: var(--gold-2);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .partner-top h3 {
+      margin: 18px 0 10px;
+      font-size: 34px;
+      letter-spacing: -0.04em;
+    }
+
+    .partner-top p {
+      margin: 0;
+      color: rgba(255,255,255,0.74);
+      line-height: 1.8;
+      font-size: 15px;
+      max-width: 520px;
+    }
+
+    .partner-bottom {
+      padding: 28px 30px 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      background: linear-gradient(180deg, rgba(201,162,74,0.06), rgba(255,255,255,0.3));
+    }
+
+    .metric {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(8,23,45,0.06);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 34px;
+      letter-spacing: -0.05em;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .metric span {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .vision-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 38px;
+    }
+
+    .vision-step {
+      padding: 24px 20px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+
+    .vision-step .small {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .vision-step strong {
+      font-size: 20px;
+      color: var(--gold-2);
+      letter-spacing: -0.03em;
+    }
+
+    .events-grid, .involve-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .event-card, .involve-card {
+      padding: 28px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(8,23,45,0.06);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .badge.dark { background: rgba(8,23,45,0.08); color: var(--navy); }
+    .badge.gold { background: rgba(201,162,74,0.16); color: #8a6819; }
+
+    .event-card h3, .involve-card h3 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+    }
+
+    .event-card p, .involve-card p {
+      margin: 0 0 20px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .contact-wrap {
+      padding: 32px;
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82));
+      border: 1px solid rgba(8,23,45,0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      margin: 14px 0 14px;
+      font-size: 36px;
+      letter-spacing: -0.04em;
+      color: var(--navy);
+    }
+
+    .contact-info p {
+      color: var(--muted);
+      line-height: 1.85;
+      margin: 0 0 12px;
+    }
+
+    .contact-points {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .contact-point {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(8,23,45,0.04);
+      border: 1px solid rgba(8,23,45,0.06);
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(8,23,45,0.12);
+      background: rgba(255,255,255,0.92);
+      font: inherit;
+      color: var(--navy);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(201,162,74,0.8);
+      box-shadow: 0 0 0 4px rgba(201,162,74,0.14);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    footer {
+      background: #071224;
+      color: rgba(255,255,255,0.65);
+      padding: 34px 0 44px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer small {
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      font-weight: 600;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-inner,
+      .split,
+      .contact-grid,
+      .grid-3,
+      .events-grid,
+      .involve-grid,
+      .vision-grid,
+      .partner-bottom,
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-inner { align-items: start; }
+    }
+
+    @media (max-width: 860px) {
+      nav ul, .nav-actions .btn { display: none; }
+      .mobile-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        color: var(--white);
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.1);
+        font-size: 22px;
+      }
+
+      .hero-inner,
+      .split,
+      .contact-grid,
+      .grid-3,
+      .events-grid,
+      .involve-grid,
+      .vision-grid,
+      .partner-bottom,
+      .form-grid,
+      .reasons {
+        grid-template-columns: 1fr;
+      }
+
+      .section { padding: 74px 0; }
+      .hero { padding-top: 42px; }
+      .hero-panel { padding: 18px; }
+      .floating-cards { grid-template-columns: 1fr; }
+      .partner-top h3, .contact-info h3 { font-size: 30px; }
+      .container { width: min(var(--max), calc(100% - 24px)); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand" onclick="scrollToSection('top')">
+        <div class="brand-mark"></div>
+        <div class="brand-text">Path<span>2</span>Possibility</div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#mission">About</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#chapters">Chapters</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-light" href="#contact">Get Involved</a>
+      </div>
+      <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+    </div>
+    <div id="mobileMenu" style="display:none; border-top:1px solid rgba(255,255,255,0.08);">
+      <div class="container" style="padding:16px 0 18px; display:grid; gap:12px;">
+        <a href="#mission" onclick="toggleMobileMenu()" style="color:white; font-weight:600;">About</a>
+        <a href="#programs" onclick="toggleMobileMenu()" style="color:white; font-weight:600;">Programs</a>
+        <a href="#impact" onclick="toggleMobileMenu()" style="color:white; font-weight:600;">Impact</a>
+        <a href="#chapters" onclick="toggleMobileMenu()" style="color:white; font-weight:600;">Chapters</a>
+        <a href="#events" onclick="toggleMobileMenu()" style="color:white; font-weight:600;">Events</a>
+        <a href="#contact" onclick="toggleMobileMenu()" style="color:white; font-weight:600;">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow">Student-Led National Vision</div>
+          <h1 class="serif">Turning <span class="accent">potential</span><br>into <span class="accent">possibility</span>.</h1>
+          <p>Path2Possibility is a fully student-led initiative expanding access to mentorship, nonprofit experience, and college guidance for high school students — especially those in underserved communities.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="#contact">Join the Movement</a>
+            <a class="btn btn-secondary" href="#chapters">Start a Chapter</a>
+          </div>
+          <div class="hero-meta">
+            <div class="meta-chip">100+ students reached</div>
+            <div class="meta-chip">3 core pillars</div>
+            <div class="meta-chip">Founding partnership with 6 Stones</div>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="panel-path"></div>
+          <div class="floating-cards">
+            <div class="mini-card">
+              <div class="label">Mentorship</div>
+              <strong>Peer-led</strong>
+              <span>Students guiding students through growth, leadership, and the future.</span>
+            </div>
+            <div class="mini-card">
+              <div class="label">Experience</div>
+              <strong>Real-world</strong>
+              <span>Hands-on nonprofit work through Path2Partner and community collaboration.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mission">
+      <div class="container">
+        <div class="eyebrow">What We Are</div>
+        <h2 class="section-title serif">Not another school club. A student-built operating system for opportunity.</h2>
+        <p class="section-lead">Path2Possibility exists to make mentorship, real-world experience, and future guidance more accessible to students who are too often left out of those opportunities. We are building an initiative where students do not just receive support — they help create it.</p>
+      </div>
+    </section>
+
+    <section class="section" id="programs" style="padding-top: 0;">
+      <div class="container">
+        <div class="eyebrow">Our Core Pillars</div>
+        <h2 class="section-title serif">Three ways we create meaningful student opportunity.</h2>
+        <div class="grid-3" style="margin-top:34px;">
+          <article class="card">
+            <div class="card-number">01</div>
+            <h3 class="serif">Peer Mentorship</h3>
+            <p>We are building a student-to-student support network where older students help younger students navigate high school, leadership, and future planning with honest, relatable guidance.</p>
+          </article>
+          <article class="card">
+            <div class="card-number">02</div>
+            <h3 class="serif">Nonprofit Partnerships</h3>
+            <p>Through Path2Partner, students work alongside nonprofits like 6 Stones in ways that are substantive, leadership-building, and grounded in real community contribution.</p>
+          </article>
+          <article class="card">
+            <div class="card-number">03</div>
+            <h3 class="serif">College Access</h3>
+            <p>We provide workshops, admissions guidance, and student-led support that help make the college process more understandable, strategic, and accessible.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-band">
+      <div class="container split">
+        <div>
+          <div class="eyebrow">Why This Matters</div>
+          <h2 class="section-title serif">Access should not depend on luck, connections, or zip code.</h2>
+          <p class="section-lead">Too many students have the potential to succeed but not the guidance, exposure, or support systems to turn that potential into something tangible. Path2Possibility is designed to close that gap with systems that can scale.</p>
+        </div>
+        <div class="reasons">
+          <div class="reason">
+            <h4 class="serif">Mentorship changes trajectories</h4>
+            <p>Students with credible guidance are better positioned to lead, apply, and grow with confidence.</p>
+          </div>
+          <div class="reason">
+            <h4 class="serif">Experience creates confidence</h4>
+            <p>Being inside a real organization builds skills and perspective in ways traditional activities often cannot.</p>
+          </div>
+          <div class="reason">
+            <h4 class="serif">Students should lead this work</h4>
+            <p>The people closest to the problem often build the strongest solutions. That is our model.</p>
+          </div>
+          <div class="reason">
+            <h4 class="serif">Local roots, national upside</h4>
+            <p>We are starting with one strong pilot and building toward a network students can launch nationwide.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="impact">
+      <div class="container">
+        <div class="partner-card">
+          <div class="partner-top">
+            <div class="partner-badge">Founding Partnership</div>
+            <h3 class="serif">Building with 6 Stones in North Texas.</h3>
+            <p>Our first nonprofit partnership is with 6 Stones, a respected North Texas organization rooted in community transformation. Through this collaboration, students gain real exposure to nonprofit work while contributing to meaningful local initiatives.</p>
+          </div>
+          <div class="partner-bottom">
+            <div class="metric"><strong>100+</strong><span>students reached through workshops</span></div>
+            <div class="metric"><strong>1</strong><span>founding nonprofit partnership</span></div>
+            <div class="metric"><strong>3</strong><span>integrated impact pillars</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-band" id="chapters">
+      <div class="container">
+        <div class="eyebrow">National Chapter Vision</div>
+        <h2 class="section-title serif">One founding team now. A national student network later.</h2>
+        <p class="section-lead">We are intentionally building from the ground up: one strong pilot, one strong partnership system, and one strong founding team. The long-term vision is a chapter-based network where students across the country can bring Path2Possibility to their own schools and communities.</p>
+        <div class="vision-grid">
+          <div class="vision-step"><div class="small">Founder</div><strong>National Lead</strong></div>
+          <div class="vision-step"><div class="small">Expansion</div><strong>Regional Directors</strong></div>
+          <div class="vision-step"><div class="small">Schools</div><strong>Chapter Directors</strong></div>
+          <div class="vision-step"><div class="small">Local Teams</div><strong>Student Leaders</strong></div>
+        </div>
+        <div class="btn-row" style="margin-top:30px;">
+          <a class="btn btn-primary" href="#contact">Express Chapter Interest</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="events">
+      <div class="container">
+        <div class="eyebrow">Events & Workshops</div>
+        <h2 class="section-title serif">High-quality student access, built through real events.</h2>
+        <div class="events-grid" style="margin-top:34px;">
+          <article class="event-card">
+            <div class="badge dark">Past Event</div>
+            <h3 class="serif">College Admissions Workshop</h3>
+            <p>We have already hosted a large in-person workshop reaching over 100 students with practical college admissions support, strategy, and peer insight.</p>
+          </article>
+          <article class="event-card">
+            <div class="badge gold">Upcoming</div>
+            <h3 class="serif">Dallas Harvard Student Event</h3>
+            <p>A major Dallas-area event featuring Harvard students speaking about admissions, access, and the broader college process for students and families.</p>
+          </article>
+          <article class="event-card">
+            <div class="badge dark">Future Programming</div>
+            <h3 class="serif">Path2Partner Showcases</h3>
+            <p>As nonprofit programming expands, students will present projects, outcomes, and community work through events designed to celebrate meaningful impact.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="eyebrow">Get Involved</div>
+        <h2 class="section-title serif">There is a place for you in this movement.</h2>
+        <div class="involve-grid" style="margin-top:34px;">
+          <article class="involve-card">
+            <h3 class="serif">Students</h3>
+            <p>Join the mentorship network, participate in workshops, and help build the future of student opportunity from the ground up.</p>
+            <a class="btn btn-light" href="#contact">Apply Interest</a>
+          </article>
+          <article class="involve-card">
+            <h3 class="serif">Nonprofits</h3>
+            <p>Partner with ambitious students who are ready to support real community work through structured, high-quality collaboration.</p>
+            <a class="btn btn-light" href="#contact">Partner With Us</a>
+          </article>
+          <article class="involve-card">
+            <h3 class="serif">Future Chapter Leaders</h3>
+            <p>Students interested in launching Path2Possibility at their school can express early interest as the national chapter model takes shape.</p>
+            <a class="btn btn-light" href="#contact">Start a Chapter</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-wrap">
+          <div class="contact-grid">
+            <div class="contact-info">
+              <div class="eyebrow">Contact</div>
+              <h3 class="serif">Let’s build something meaningful.</h3>
+              <p>Whether you’re a student, school, nonprofit, or potential supporter, we’d love to hear from you. Path2Possibility is still early — which means this is the best time to help shape what it becomes.</p>
+              <div class="contact-points">
+                <div class="contact-point">Student interest and leadership applications</div>
+                <div class="contact-point">Nonprofit partnership conversations</div>
+                <div class="contact-point">Workshops, speaking, and school outreach</div>
+                <div class="contact-point">Future chapter interest across the U.S.</div>
+              </div>
+            </div>
+            <form class="form-grid" onsubmit="event.preventDefault(); alert('Thanks — this is a demo form for now.');">
+              <div class="field">
+                <label>Your Name</label>
+                <input type="text" placeholder="First and last name" />
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input type="email" placeholder="you@example.com" />
+              </div>
+              <div class="field full">
+                <label>I’m Reaching Out As</label>
+                <select>
+                  <option>Student</option>
+                  <option>Parent</option>
+                  <option>Nonprofit / Organization</option>
+                  <option>School / Educator</option>
+                  <option>Future Chapter Leader</option>
+                  <option>Mentor / Volunteer</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label>Message</label>
+                <textarea placeholder="Tell us what brought you here..."></textarea>
+              </div>
+              <div class="field full">
+                <button class="btn btn-primary" type="submit">Send Message</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer">
+      <small>© 2026 Path2Possibility — Student-led. Mission-driven. Built for long-term opportunity.</small>
+      <div class="footer-links">
+        <a href="#mission">About</a>
+        <a href="#programs">Programs</a>
+        <a href="#impact">Impact</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
+
