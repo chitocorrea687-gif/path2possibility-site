@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="shortcut icon" href="/favicon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Path2Possibility — A Student-Led Network for Student Opportunity</title>
@@ -10,6 +8,56 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
+    html { scroll-behavior: smooth; }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(120%); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(227, 189, 102, 0.18); }
+      50% { box-shadow: 0 0 0 18px rgba(227, 189, 102, 0.02); }
+    }
+
+    @keyframes drift {
+      0% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(18px,-12px,0) scale(1.03); }
+      100% { transform: translate3d(0,0,0) scale(1); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      will-change: opacity, transform;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
     :root {
       --navy: #08172d;
       --navy-2: #0d2342;
@@ -75,6 +123,8 @@
 
     .btn-row { display: flex; flex-wrap: wrap; gap: 14px; }
     .btn {
+      position: relative;
+      overflow: hidden;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -88,6 +138,17 @@
       border: 1px solid transparent;
     }
     .btn:hover { transform: translateY(-2px); }
+    .btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.26) 50%, transparent 80%);
+      transform: translateX(-120%);
+      pointer-events: none;
+    }
+    .btn:hover::after {
+      animation: shimmer 0.9s ease;
+    }
     .btn-primary {
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 100%);
       color: var(--navy);
@@ -185,6 +246,7 @@
     .mobile-toggle { display: none; }
 
     .hero {
+      isolation: isolate;
       position: relative;
       overflow: hidden;
       background:
@@ -195,6 +257,7 @@
       padding: 76px 0 56px;
     }
     .hero::before {
+      z-index: 0;
       content: "";
       position: absolute;
       inset: 0;
@@ -204,6 +267,21 @@
       pointer-events: none;
       opacity: 0.35;
     }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 560px;
+      height: 560px;
+      right: -120px;
+      top: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(227,189,102,0.12), transparent 68%);
+      filter: blur(10px);
+      animation: drift 10s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .hero-inner {
       position: relative;
       z-index: 1;
@@ -245,6 +323,7 @@
     }
 
     .hero-panel {
+      animation: floatY 7s ease-in-out infinite;
       position: relative;
       padding: 26px;
       border-radius: 32px;
@@ -286,6 +365,7 @@
       border-bottom-color: rgba(227,189,102,0.95);
     }
     .panel-path::after {
+      animation: pulseGlow 3.8s ease-in-out infinite;
       content: "";
       position: absolute;
       width: 14px;
@@ -345,6 +425,7 @@
       transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     }
     .card:hover {
+      transform: translateY(-7px) scale(1.01);
       transform: translateY(-5px);
       box-shadow: var(--shadow);
       border-color: rgba(201,162,74,0.35);
@@ -522,6 +603,7 @@
       gap: 24px;
     }
     .event-card, .involve-card {
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
       padding: 28px;
       border-radius: 28px;
       background: rgba(255,255,255,0.92);
@@ -540,6 +622,12 @@
     }
     .badge.dark { background: rgba(8,23,45,0.08); color: var(--navy); }
     .badge.gold { background: rgba(201,162,74,0.16); color: #8a6819; }
+    .event-card:hover, .involve-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+      border-color: rgba(201,162,74,0.32);
+    }
+
     .event-card h3, .involve-card h3 {
       margin: 0 0 12px;
       font-size: 26px;
@@ -717,7 +805,7 @@
   </header>
 
   <main id="top">
-    <section class="hero">
+    <section class="hero reveal visible">
       <div class="container hero-inner">
         <div class="hero-copy">
           <div class="eyebrow">A Student-Led Network for Student Opportunity</div>
@@ -751,7 +839,7 @@
       </div>
     </section>
 
-    <section class="section" id="mission">
+    <section class="section reveal" id="mission">
       <div class="container">
         <div class="eyebrow">What We Are</div>
         <h2 class="section-title serif">Not another club. A student-built opportunity network.</h2>
@@ -759,27 +847,27 @@
       </div>
     </section>
 
-    <section class="section" id="programs" style="padding-top: 0;">
+    <section class="section reveal" id="programs" style="padding-top: 0;">
       <div class="container">
         <div class="eyebrow">Programs</div>
         <h2 class="section-title serif">Four ways we expand student opportunity.</h2>
         <div class="grid-4" style="margin-top:34px;">
-          <article class="card">
+          <article class="card reveal reveal-delay-1">
             <div class="card-number">01</div>
             <h3 class="serif">Peer Mentorship</h3>
             <p>A student-to-student support system where older students help younger ones navigate academics, leadership, confidence, and future planning.</p>
           </article>
-          <article class="card">
+          <article class="card reveal reveal-delay-1">
             <div class="card-number">02</div>
             <h3 class="serif">Path2Impact</h3>
             <p>Our experiential learning branch connecting students with nonprofits so they gain hands-on experience, leadership development, and meaningful community engagement.</p>
           </article>
-          <article class="card">
+          <article class="card reveal reveal-delay-1">
             <div class="card-number">03</div>
             <h3 class="serif">Path2Careers</h3>
             <p>Career exposure through webinars, panels, school events, and professional storytelling across tracks like health, business, engineering, tech, and more.</p>
           </article>
-          <article class="card">
+          <article class="card reveal reveal-delay-1">
             <div class="card-number">04</div>
             <h3 class="serif">Path2College</h3>
             <p>Admissions workshops, application guidance, and college-access support that help students navigate the process with more clarity and confidence.</p>
@@ -788,7 +876,7 @@
       </div>
     </section>
 
-    <section class="section dark-band">
+    <section class="section dark-band reveal">
       <div class="container split">
         <div>
           <div class="eyebrow">Why This Matters</div>
@@ -796,19 +884,19 @@
           <p class="section-lead">Too many students have talent and ambition, but not the mentorship, exposure, or institutional access that help turn those things into real outcomes. Path2Possibility exists to build that missing infrastructure.</p>
         </div>
         <div class="reasons">
-          <div class="reason">
+          <div class="reason reveal reveal-delay-1">
             <h4 class="serif">Mentorship changes trajectories</h4>
             <p>Students are more confident and better prepared when guidance comes from people who have actually been in their shoes.</p>
           </div>
-          <div class="reason">
+          <div class="reason reveal reveal-delay-1">
             <h4 class="serif">Experience builds credibility</h4>
             <p>Hands-on nonprofit work gives students real stories, real skills, and real community perspective.</p>
           </div>
-          <div class="reason">
+          <div class="reason reveal reveal-delay-1">
             <h4 class="serif">Career exposure expands imagination</h4>
             <p>Students often cannot pursue what they have never seen. Professional access widens what feels possible.</p>
           </div>
-          <div class="reason">
+          <div class="reason reveal reveal-delay-1">
             <h4 class="serif">Student-led systems scale differently</h4>
             <p>When students build for students, the work is more relevant, more trusted, and better positioned to grow.</p>
           </div>
@@ -816,7 +904,7 @@
       </div>
     </section>
 
-    <section class="section" id="impact">
+    <section class="section reveal" id="impact">
       <div class="container">
         <div class="partner-card">
           <div class="partner-top">
@@ -833,16 +921,16 @@
       </div>
     </section>
 
-    <section class="section dark-band" id="chapters">
+    <section class="section dark-band reveal" id="chapters">
       <div class="container">
         <div class="eyebrow">National Vision</div>
         <h2 class="section-title serif">One strong pilot now. A national chapter network later.</h2>
         <p class="section-lead">We are beginning with a strong founding team, early mentorship work, Path2Impact nonprofit collaboration, and high-quality student programming. The long-term vision is a chapter-based national network where students can bring mentorship, career exposure, nonprofit experience, and college guidance to their own schools and communities.</p>
         <div class="vision-grid">
-          <div class="vision-step"><div class="small">Founder</div><strong>National Lead</strong></div>
-          <div class="vision-step"><div class="small">Expansion</div><strong>Regional Directors</strong></div>
-          <div class="vision-step"><div class="small">Schools</div><strong>Chapter Directors</strong></div>
-          <div class="vision-step"><div class="small">Local Teams</div><strong>Student Leaders</strong></div>
+          <div class="vision-step reveal reveal-delay-1"><div class="small">Founder</div><strong>National Lead</strong></div>
+          <div class="vision-step reveal reveal-delay-1"><div class="small">Expansion</div><strong>Regional Directors</strong></div>
+          <div class="vision-step reveal reveal-delay-1"><div class="small">Schools</div><strong>Chapter Directors</strong></div>
+          <div class="vision-step reveal reveal-delay-1"><div class="small">Local Teams</div><strong>Student Leaders</strong></div>
         </div>
         <div class="btn-row" style="margin-top:30px;">
           <a class="btn btn-primary" href="#contact">Express Chapter Interest</a>
@@ -850,22 +938,22 @@
       </div>
     </section>
 
-    <section class="section" id="events">
+    <section class="section reveal" id="events">
       <div class="container">
         <div class="eyebrow">Events & Programming</div>
         <h2 class="section-title serif">Access built through workshops, panels, and real conversations.</h2>
         <div class="events-grid" style="margin-top:34px;">
-          <article class="event-card">
+          <article class="event-card reveal reveal-delay-1">
             <div class="badge dark">Path2College</div>
             <h3 class="serif">College Admissions Workshops</h3>
             <p>We have already hosted a large in-person workshop reaching over 100 students with practical admissions support, strategy, and peer insight.</p>
           </article>
-          <article class="event-card">
+          <article class="event-card reveal reveal-delay-1">
             <div class="badge gold">Upcoming</div>
             <h3 class="serif">Dallas Harvard Student Event</h3>
             <p>A major Dallas-area event featuring Harvard students speaking about admissions, access, and the broader college process for students and families.</p>
           </article>
-          <article class="event-card">
+          <article class="event-card reveal reveal-delay-1">
             <div class="badge dark">Path2Careers</div>
             <h3 class="serif">Career Panels & School Events</h3>
             <p>Future Path2Careers programming will include webinars, speaker panels, and in-person school events across tracks like premed, business, engineering, law, and tech.</p>
@@ -874,22 +962,22 @@
       </div>
     </section>
 
-    <section class="section" style="padding-top:0;">
+    <section class="section reveal" style="padding-top:0;">
       <div class="container">
         <div class="eyebrow">Get Involved</div>
         <h2 class="section-title serif">There is a place for you in this network.</h2>
         <div class="involve-grid" style="margin-top:34px;">
-          <article class="involve-card">
+          <article class="involve-card reveal reveal-delay-1">
             <h3 class="serif">Students</h3>
             <p>Join mentorship, attend events, explore future career pathways, and help build a student-led system for opportunity from the ground up.</p>
             <a class="btn btn-light" href="#contact">Student Interest</a>
           </article>
-          <article class="involve-card">
+          <article class="involve-card reveal reveal-delay-1">
             <h3 class="serif">Nonprofits</h3>
             <p>Partner through Path2Impact to work with ambitious students who are ready to contribute meaningfully while developing real-world experience.</p>
             <a class="btn btn-light" href="#contact">Partner With Us</a>
           </article>
-          <article class="involve-card">
+          <article class="involve-card reveal reveal-delay-1">
             <h3 class="serif">Schools & Chapter Leaders</h3>
             <p>Bring Path2Possibility to your community through future chapters, school programming, career events, and long-term student development initiatives.</p>
             <a class="btn btn-light" href="#contact">Start a Chapter</a>
@@ -898,7 +986,7 @@
       </div>
     </section>
 
-    <section class="section" id="contact">
+    <section class="section reveal" id="contact">
       <div class="container">
         <div class="contact-wrap">
           <div class="contact-grid">
@@ -970,6 +1058,19 @@
       const menu = document.getElementById('mobileMenu');
       menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+      if (!el.classList.contains('visible')) observer.observe(el);
+    });
   </script>
 </body>
 </html>
