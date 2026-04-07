@@ -1482,7 +1482,75 @@
                   <div class="contact-point">Media & Press</div>
                 </div>
               </div>
-              <form class="form-grid" onsubmit="event.preventDefault(); alert('Thanks — this is a demo form for now.');">
+              
+              <form
+                id="contactForm"
+                class="form-grid"
+                action="https://script.google.com/macros/s/AKfycbyHnjsy2ropRdZqZTAO0I8QiZ58riT4zfHAVg78WZfSpYCifrzMknTUnv-Yw9kHWsyKmg/exec"
+                method="POST"
+                onsubmit="submitContactForm(event)"
+              >
+                <div class="field">
+                  <label for="contactName">Your Name</label>
+                  <input
+                    id="contactName"
+                    name="name"
+                    type="text"
+                    placeholder="First and last name"
+                    required
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="contactEmail">Email</label>
+                  <input
+                    id="contactEmail"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
+
+                <div class="field full">
+                  <label for="contactRole">I Am A...</label>
+                  <select id="contactRole" name="role" required>
+                    <option value="Student">Student</option>
+                    <option value="Parent">Parent</option>
+                    <option value="Nonprofit / Organization">Nonprofit / Organization</option>
+                    <option value="Educator / School Administrator">Educator / School Administrator</option>
+                    <option value="Future Chapter Leader">Future Chapter Leader</option>
+                    <option value="Mentor / Volunteer">Mentor / Volunteer</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="contactMessage">Message</label>
+                  <textarea
+                    id="contactMessage"
+                    name="message"
+                    placeholder="Tell us what brought you here..."
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="field full">
+                  <button
+                    class="btn btn-primary"
+                    id="contactSubmitBtn"
+                    type="submit"
+                    style="width:100%;"
+                  >
+                    Send Message
+                  </button>
+                </div>
+
+                <div class="field full">
+                  <p id="contactStatus" style="margin:0; font-weight:600; color:var(--navy);"></p>
+                </div>
+              </form>
+              
                 <div class="field">
                   <label>Your Name</label>
                   <input type="text" placeholder="First and last name" />
@@ -1581,6 +1649,79 @@
     initReveal();
 
     // Also immediately mark hero reveals visible
+    document.querySelectorAll('#page-home .hero .reveal').forEach(el => el.classList.add('visible'));
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById('page-' + id);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      document.querySelectorAll('nav a[data-page]').forEach(a => {
+        a.classList.toggle('active', a.dataset.page === id);
+      });
+      setTimeout(initReveal, 50);
+    }
+  
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+  
+    function initReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+  
+      document.querySelectorAll('#page-' + currentPage() + ' .reveal').forEach((el) => {
+        if (!el.classList.contains('visible')) observer.observe(el);
+        else el.classList.add('visible');
+      });
+    }
+  
+    function currentPage() {
+      const active = document.querySelector('.page.active');
+      return active ? active.id.replace('page-', '') : 'home';
+    }
+  
+    async function submitContactForm(event) {
+      event.preventDefault();
+  
+      const form = event.target;
+      const button = document.getElementById('contactSubmitBtn');
+      const status = document.getElementById('contactStatus');
+  
+      button.disabled = true;
+      button.textContent = 'Sending...';
+      status.textContent = '';
+  
+      try {
+        const formData = new FormData(form);
+  
+        await fetch(form.action, {
+          method: 'POST',
+          body: new URLSearchParams(formData),
+           mode: 'no-cors'
+        });
+  
+        form.reset();
+        status.textContent = 'Thanks — your message was sent.';
+      } catch (error) {
+        status.textContent = 'Something went wrong. Please try again.';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Send Message';
+      }
+    }
+
+    document.querySelector('nav a[data-page="home"]').classList.add('active');
+    initReveal();
     document.querySelectorAll('#page-home .hero .reveal').forEach(el => el.classList.add('visible'));
   </script>
 </body>
