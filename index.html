@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
-
+ 
     @keyframes floatY {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-10px); }
@@ -33,7 +33,44 @@
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
+ 
+    /* ── Typing cursor ── */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .typing-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.85em;
+      background: var(--gold-2);
+      margin-left: 4px;
+      vertical-align: middle;
+      border-radius: 2px;
+      animation: blink 0.75s step-end infinite;
+    }
+    .typing-cursor.hidden { display: none; }
+ 
+    /* ── Hero fly-in for content after typing ── */
+    @keyframes flyIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-after {
+      opacity: 0;
+    }
+    .hero-after.animate {
+      animation: flyIn 0.55s ease both;
+    }
+    .hero-after.animate.delay-1 { animation-delay: 0.06s; }
+    .hero-after.animate.delay-2 { animation-delay: 0.14s; }
+    .hero-after.animate.delay-3 { animation-delay: 0.22s; }
+    .hero-after.animate.delay-4 { animation-delay: 0.30s; }
+    /* When animation ends, leave them visible */
+    .hero-after.done {
+      opacity: 1;
+    }
+ 
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -47,12 +84,13 @@
     .reveal-delay-1 { transition-delay: 0.08s; }
     .reveal-delay-2 { transition-delay: 0.16s; }
     .reveal-delay-3 { transition-delay: 0.24s; }
-
+ 
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal { opacity: 1 !important; transform: none !important; }
+      .hero-after { opacity: 1 !important; }
     }
-
+ 
     :root {
       --navy: #08172d;
       --navy-2: #0d2342;
@@ -67,7 +105,7 @@
       --shadow-soft: 0 10px 30px rgba(8, 23, 45, 0.08);
       --max: 1200px;
     }
-
+ 
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -79,7 +117,7 @@
     a { color: inherit; text-decoration: none; }
     .container { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
     .serif { font-family: 'Playfair Display', Georgia, serif; }
-
+ 
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -96,7 +134,7 @@
       background: currentColor;
       opacity: 0.8;
     }
-
+ 
     .section { padding: 96px 0; }
     .section-title {
       margin: 14px 0 16px;
@@ -112,7 +150,7 @@
       color: var(--muted);
       margin: 0;
     }
-
+ 
     .btn-row { display: flex; flex-wrap: wrap; gap: 14px; }
     .btn {
       position: relative;
@@ -155,7 +193,7 @@
       box-shadow: var(--shadow-soft);
       border-color: rgba(8, 23, 45, 0.06);
     }
-
+ 
     /* ─── HEADER ─── */
     header {
       position: sticky;
@@ -192,7 +230,7 @@
       white-space: nowrap;
     }
     .brand-text span { color: var(--gold-2); }
-
+ 
     nav ul {
       display: flex;
       align-items: center;
@@ -210,17 +248,17 @@
     }
     nav a:hover { color: var(--gold-2); background: rgba(255,255,255,0.06); }
     nav a.active { color: var(--gold-2); background: rgba(227,189,102,0.12); }
-
+ 
     .nav-actions { display: flex; align-items: center; gap: 12px; }
     .mobile-toggle { display: none; }
-
+ 
     /* ─── PAGE SYSTEM ─── */
     .page { display: none; }
     .page.active {
       display: block;
       animation: pageIn 0.5s ease both;
     }
-
+ 
     /* ─── HERO ─── */
     .hero {
       isolation: isolate;
@@ -377,7 +415,7 @@
       line-height: 1.6;
       color: rgba(255,255,255,0.78);
     }
-
+ 
     /* ─── CARDS ─── */
     .grid-4 {
       display: grid;
@@ -427,7 +465,7 @@
       line-height: 1.8;
       font-size: 15px;
     }
-
+ 
     /* ─── DARK BAND ─── */
     .dark-band {
       background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
@@ -435,7 +473,7 @@
     }
     .dark-band .section-title { color: var(--white); }
     .dark-band .section-lead { color: rgba(255,255,255,0.68); }
-
+ 
     .split {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -466,7 +504,7 @@
       color: rgba(255,255,255,0.72);
       line-height: 1.75;
     }
-
+ 
     /* ─── PARTNER CARD ─── */
     .partner-card {
       border-radius: 32px;
@@ -542,7 +580,7 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
-
+ 
     /* ─── VISION ─── */
     .vision-grid {
       display: grid;
@@ -570,7 +608,7 @@
       color: var(--gold-2);
       letter-spacing: -0.03em;
     }
-
+ 
     /* ─── EVENT / INVOLVE CARDS ─── */
     .events-grid, .involve-grid {
       display: grid;
@@ -615,7 +653,7 @@
       line-height: 1.8;
       color: var(--muted);
     }
-
+ 
     /* ─── CONTACT ─── */
     .contact-wrap {
       padding: 32px;
@@ -679,7 +717,7 @@
       border-color: rgba(201,162,74,0.8);
       box-shadow: 0 0 0 4px rgba(201,162,74,0.14);
     }
-
+ 
     /* ─── ABOUT PAGE SPECIFIC ─── */
     .about-hero {
       background:
@@ -719,7 +757,7 @@
       max-width: 680px;
       margin: 0;
     }
-
+ 
     .story-block {
       background: rgba(255,255,255,0.82);
       backdrop-filter: blur(12px);
@@ -741,7 +779,7 @@
       font-size: 16px;
     }
     .story-block p:last-child { margin-bottom: 0; }
-
+ 
     .mission-vision-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -766,7 +804,7 @@
       line-height: 1.8;
       font-size: 15px;
     }
-
+ 
     /* ─── PROGRAMS PAGE SPECIFIC ─── */
     .program-detail {
       background: rgba(255,255,255,0.85);
@@ -855,7 +893,7 @@
       flex-shrink: 0;
       margin-top: 1px;
     }
-
+ 
     /* ─── IMPACT PAGE SPECIFIC ─── */
     .stats-banner {
       background: linear-gradient(160deg, #102a4c, #08172d);
@@ -895,7 +933,7 @@
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
-
+ 
     .quote-block {
       margin: 48px 0 0;
       padding: 36px;
@@ -919,7 +957,7 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
-
+ 
     .future-band {
       padding: 60px 0;
       background: rgba(8,23,45,0.04);
@@ -940,7 +978,7 @@
       line-height: 1.8;
       font-size: 16px;
     }
-
+ 
     /* ─── FOOTER ─── */
     footer {
       background: #071224;
@@ -960,7 +998,7 @@
     .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
     .footer-links a { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 600; }
     .footer-links a:hover { color: var(--gold-2); }
-
+ 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1100px) {
       .hero-inner, .split, .contact-grid, .grid-4,
@@ -998,7 +1036,7 @@
   </style>
 </head>
 <body>
-
+ 
   <header>
     <div class="container nav">
       <div class="brand" onclick="showPage('home')">
@@ -1031,28 +1069,39 @@
       </div>
     </div>
   </header>
-
+ 
   <main>
-
+ 
     <!-- ═══════════════════════════════ HOME ═══════════════════════════════ -->
     <div id="page-home" class="page active">
       <section class="hero">
         <div class="container hero-inner">
           <div class="hero-copy">
-            <div class="eyebrow">A Student-Led Network for Student Opportunity</div>
-            <h1 class="serif">Turning <span class="accent">potential</span><br>into <span class="accent">possibility</span>.</h1>
-            <p>Path2Possibility connects students to mentorship, nonprofit experience, career exposure, and college guidance — building the support systems and opportunities too many students are forced to navigate without.</p>
-            <div class="btn-row">
+ 
+            <!-- Eyebrow typed first -->
+            <div class="eyebrow" id="hero-eyebrow" style="min-height:1.5em;">
+              <span id="eyebrow-text"></span><span class="typing-cursor" id="eyebrow-cursor"></span>
+            </div>
+ 
+            <!-- H1 typed second -->
+            <h1 class="serif" id="hero-h1" style="margin: 18px 0; min-height:2em;">
+              <span id="h1-text"></span><span class="typing-cursor hidden" id="h1-cursor"></span>
+            </h1>
+ 
+            <!-- Everything below flies in after typing completes -->
+            <p class="hero-after delay-1">Path2Possibility connects students to mentorship, nonprofit experience, career exposure, and college guidance — building the support systems and opportunities too many students are forced to navigate without.</p>
+            <div class="btn-row hero-after delay-2">
               <a class="btn btn-primary" href="#" onclick="showPage('contact');return false;">Join the Movement</a>
               <a class="btn btn-secondary" href="#" onclick="showPage('contact');return false;">Start a Chapter</a>
             </div>
-            <div class="hero-meta">
+            <div class="hero-meta hero-after delay-3">
               <div class="meta-chip">100+ students reached</div>
               <div class="meta-chip">4 core program areas</div>
               <div class="meta-chip">Founding partner: 6 Stones</div>
             </div>
+ 
           </div>
-          <div class="hero-panel">
+          <div class="hero-panel hero-after delay-4">
             <div class="panel-path"></div>
             <div class="floating-cards">
               <div class="mini-card">
@@ -1069,7 +1118,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section">
         <div class="container">
           <div class="eyebrow">What We Are</div>
@@ -1081,7 +1130,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section dark-band" style="padding-top:80px; padding-bottom:80px;">
         <div class="container">
           <div class="eyebrow">Four Pillars</div>
@@ -1113,7 +1162,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section">
         <div class="container">
           <div class="partner-card">
@@ -1130,7 +1179,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section dark-band" style="padding-top:80px; padding-bottom:80px;">
         <div class="container">
           <div class="eyebrow">National Vision</div>
@@ -1147,7 +1196,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section">
         <div class="container">
           <div class="eyebrow">Get Involved</div>
@@ -1172,7 +1221,7 @@
         </div>
       </section>
     </div>
-
+ 
     <!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
     <div id="page-about" class="page">
       <section class="about-hero">
@@ -1182,7 +1231,7 @@
           <p>We're not a program. We're a movement — built on the belief that where you start shouldn't define where you go.</p>
         </div>
       </section>
-
+ 
       <section class="section">
         <div class="container">
           <div class="eyebrow">Founder Story</div>
@@ -1201,7 +1250,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section dark-band" style="padding-top:80px; padding-bottom:80px;">
         <div class="container">
           <div class="eyebrow">Who We Are</div>
@@ -1218,7 +1267,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section">
         <div class="container">
           <div class="eyebrow">Why It Works</div>
@@ -1245,7 +1294,7 @@
         </div>
       </section>
     </div>
-
+ 
     <!-- ═══════════════════════════════ PROGRAMS ═══════════════════════════════ -->
     <div id="page-programs" class="page">
       <section class="about-hero">
@@ -1255,11 +1304,11 @@
           <p>Everything we build is designed around one question: what do students actually need to succeed — and how do we make that accessible to everyone?</p>
         </div>
       </section>
-
+ 
       <section class="section">
         <div class="container">
           <div style="display:grid; gap:28px;">
-
+ 
             <article class="program-detail reveal">
               <div class="program-top">
                 <div class="program-num">01 · Core Pillar</div>
@@ -1278,7 +1327,7 @@
                 </ul>
               </div>
             </article>
-
+ 
             <article class="program-detail reveal">
               <div class="program-top">
                 <div class="program-num">02 · Flagship Program</div>
@@ -1298,7 +1347,7 @@
                 </ul>
               </div>
             </article>
-
+ 
             <article class="program-detail reveal">
               <div class="program-top">
                 <div class="program-num">03 · Access Initiative</div>
@@ -1318,11 +1367,11 @@
                 </ul>
               </div>
             </article>
-
+ 
           </div>
         </div>
       </section>
-
+ 
       <section class="section dark-band" style="padding-top:80px; padding-bottom:80px;">
         <div class="container" style="text-align:center;">
           <div class="eyebrow" style="justify-content:center;">Get Involved</div>
@@ -1335,7 +1384,7 @@
         </div>
       </section>
     </div>
-
+ 
     <!-- ═══════════════════════════════ IMPACT ═══════════════════════════════ -->
     <div id="page-impact" class="page">
       <section class="about-hero">
@@ -1345,7 +1394,7 @@
           <p>Path2Possibility creates real outcomes — for students, for nonprofits, and for the communities they both serve.</p>
         </div>
       </section>
-
+ 
       <section class="stats-banner">
         <div class="container stats-inner">
           <div class="stat-item reveal">
@@ -1366,7 +1415,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section">
         <div class="container">
           <div class="partner-card">
@@ -1384,7 +1433,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section dark-band" style="padding-top:60px; padding-bottom:60px;">
         <div class="container">
           <div class="eyebrow">Our Approach</div>
@@ -1396,7 +1445,7 @@
           </div>
         </div>
       </section>
-
+ 
       <div class="future-band">
         <div class="container">
           <div class="eyebrow" style="justify-content:center;">Future Impact</div>
@@ -1408,7 +1457,7 @@
         </div>
       </div>
     </div>
-
+ 
     <!-- ═══════════════════════════════ EVENTS ═══════════════════════════════ -->
     <div id="page-events" class="page">
       <section class="about-hero">
@@ -1418,7 +1467,7 @@
           <p>Our events bring together students, mentors, and experts for meaningful, substantive conversations — not generic advice.</p>
         </div>
       </section>
-
+ 
       <section class="section">
         <div class="container">
           <div class="events-grid" style="margin-top:0;">
@@ -1443,7 +1492,7 @@
           </div>
         </div>
       </section>
-
+ 
       <section class="section dark-band" style="padding-top:80px; padding-bottom:80px;">
         <div class="container" style="max-width:680px; margin:0 auto; text-align:center;">
           <div class="eyebrow" style="justify-content:center;">Stay Updated</div>
@@ -1455,7 +1504,7 @@
         </div>
       </section>
     </div>
-
+ 
     <!-- ═══════════════════════════════ CONTACT ═══════════════════════════════ -->
     <div id="page-contact" class="page">
       <section class="about-hero">
@@ -1465,7 +1514,7 @@
           <p>Whether you have a question about our programs, want to explore a partnership, or just want to learn more about what we're building — we'd love to hear from you. We're a student-led organization, so responses may take a day or two. We appreciate your patience and your interest.</p>
         </div>
       </section>
-
+ 
       <section class="section" style="padding-top:60px;">
         <div class="container">
           <div class="contact-wrap">
@@ -1492,26 +1541,12 @@
               >
                 <div class="field">
                   <label for="contactName">Your Name</label>
-                  <input
-                    id="contactName"
-                    name="name"
-                    type="text"
-                    placeholder="First and last name"
-                    required
-                  />
+                  <input id="contactName" name="name" type="text" placeholder="First and last name" required />
                 </div>
-
                 <div class="field">
                   <label for="contactEmail">Email</label>
-                  <input
-                    id="contactEmail"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    required
-                  />
+                  <input id="contactEmail" name="email" type="email" placeholder="you@example.com" required />
                 </div>
-
                 <div class="field full">
                   <label for="contactRole">I Am A...</label>
                   <select id="contactRole" name="role" required>
@@ -1524,28 +1559,13 @@
                     <option value="Other">Other</option>
                   </select>
                 </div>
-
                 <div class="field full">
                   <label for="contactMessage">Message</label>
-                  <textarea
-                    id="contactMessage"
-                    name="message"
-                    placeholder="Tell us what brought you here..."
-                    required
-                  ></textarea>
+                  <textarea id="contactMessage" name="message" placeholder="Tell us what brought you here..." required></textarea>
                 </div>
-
                 <div class="field full">
-                  <button
-                    class="btn btn-primary"
-                    id="contactSubmitBtn"
-                    type="submit"
-                    style="width:100%;"
-                  >
-                    Send Message
-                  </button>
+                  <button class="btn btn-primary" id="contactSubmitBtn" type="submit" style="width:100%;">Send Message</button>
                 </div>
-
                 <div class="field full">
                   <p id="contactStatus" style="margin:0; font-weight:600; color:var(--navy);"></p>
                 </div>
@@ -1556,9 +1576,9 @@
         </div>
       </section>
     </div>
-
+ 
   </main>
-
+ 
   <footer>
     <div class="container footer">
       <small>© 2026 Path2Possibility — A student-led network expanding access to mentorship, experience, and future opportunity.</small>
@@ -1571,30 +1591,118 @@
       </div>
     </div>
   </footer>
-
+ 
   <script>
+    /* ─── TYPING ANIMATION ─── */
+ 
+    // The two strings to type
+    const EYEBROW_TEXT = "A Student-Led Network for Student Opportunity";
+ 
+    // H1 has two lines with an accent on the second
+    // We'll type it as plain text then swap in the HTML at the end
+    const H1_LINE1 = "Turning potential";
+    const H1_LINE2 = "into possibility.";
+ 
+    // Speeds (ms per character)
+    const EYEBROW_SPEED = 38;
+    const H1_SPEED = 48;
+    const PAUSE_BETWEEN = 260; // pause after eyebrow before h1 starts
+ 
+    let heroAnimated = false;
+ 
+    function typeText(element, text, speed, onDone) {
+      let i = 0;
+      element.textContent = "";
+      const interval = setInterval(() => {
+        element.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          if (onDone) onDone();
+        }
+      }, speed);
+    }
+ 
+    function runHeroTyping() {
+      if (heroAnimated) return;
+      heroAnimated = true;
+ 
+      const eyebrowText = document.getElementById('eyebrow-text');
+      const eyebrowCursor = document.getElementById('eyebrow-cursor');
+      const h1Text = document.getElementById('h1-text');
+      const h1Cursor = document.getElementById('h1-cursor');
+ 
+      // Phase 1: type eyebrow
+      typeText(eyebrowText, EYEBROW_TEXT, EYEBROW_SPEED, () => {
+        // Brief pause, then move cursor to h1
+        setTimeout(() => {
+          eyebrowCursor.classList.add('hidden');
+          h1Cursor.classList.remove('hidden');
+ 
+          // Phase 2: type h1 line 1
+          typeText(h1Text, H1_LINE1, H1_SPEED, () => {
+            // Insert line break + start line 2
+            h1Text.innerHTML = 'Turning <span class="accent">potential</span><br>';
+            const line2Span = document.createElement('span');
+            h1Text.appendChild(line2Span);
+            // Move cursor after line2Span
+            h1Text.appendChild(h1Cursor);
+ 
+            let i = 0;
+            const interval = setInterval(() => {
+              line2Span.textContent += H1_LINE2[i];
+              i++;
+              if (i >= H1_LINE2.length) {
+                clearInterval(interval);
+                // Replace with final HTML
+                setTimeout(() => {
+                  h1Cursor.classList.add('hidden');
+                  h1Text.innerHTML = 'Turning <span class="accent">potential</span><br>into <span class="accent">possibility.</span>';
+                  // Trigger fly-in for everything below
+                  flyInHeroContent();
+                }, 320);
+              }
+            }, H1_SPEED);
+          });
+        }, PAUSE_BETWEEN);
+      });
+    }
+ 
+    function flyInHeroContent() {
+      const els = document.querySelectorAll('#page-home .hero .hero-after');
+      els.forEach(el => {
+        el.classList.add('animate');
+        // After animation ends, mark as done so opacity stays 1
+        el.addEventListener('animationend', () => {
+          el.classList.add('done');
+        }, { once: true });
+      });
+    }
+ 
+    /* ─── PAGE SYSTEM ─── */
     function showPage(id) {
-      // Hide all pages
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      // Show target
       const target = document.getElementById('page-' + id);
       if (target) {
         target.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      // Update nav active state
       document.querySelectorAll('nav a[data-page]').forEach(a => {
         a.classList.toggle('active', a.dataset.page === id);
       });
-      // Re-run reveal observer on newly visible elements
       setTimeout(initReveal, 50);
+ 
+      // Re-run typing if returning to home
+      if (id === 'home' && !heroAnimated) {
+        runHeroTyping();
+      }
     }
-
+ 
     function toggleMobileMenu() {
       const menu = document.getElementById('mobileMenu');
       menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     }
-
+ 
     function initReveal() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -1604,38 +1712,33 @@
           }
         });
       }, { threshold: 0.12 });
-
+ 
       document.querySelectorAll('#page-' + currentPage() + ' .reveal').forEach((el) => {
         if (!el.classList.contains('visible')) observer.observe(el);
         else el.classList.add('visible');
       });
     }
-
+ 
     function currentPage() {
       const active = document.querySelector('.page.active');
       return active ? active.id.replace('page-', '') : 'home';
     }
-
+ 
     async function submitContactForm(event) {
       event.preventDefault();
-  
       const form = event.target;
       const button = document.getElementById('contactSubmitBtn');
       const status = document.getElementById('contactStatus');
-  
       button.disabled = true;
       button.textContent = 'Sending...';
       status.textContent = '';
-  
       try {
         const formData = new FormData(form);
-  
         await fetch(form.action, {
           method: 'POST',
           body: new URLSearchParams(formData),
-           mode: 'no-cors'
+          mode: 'no-cors'
         });
-  
         form.reset();
         status.textContent = 'Thanks — your message was sent.';
       } catch (error) {
@@ -1645,10 +1748,13 @@
         button.textContent = 'Send Message';
       }
     }
-
+ 
+    // Init
     document.querySelector('nav a[data-page="home"]').classList.add('active');
     initReveal();
-    document.querySelectorAll('#page-home .hero .reveal').forEach(el => el.classList.add('visible'));
+ 
+    // Start typing on load
+    runHeroTyping();
   </script>
 </body>
 </html>
