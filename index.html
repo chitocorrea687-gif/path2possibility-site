@@ -34,7 +34,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
  
-    /* ── Typing cursor ── */
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
@@ -51,7 +50,6 @@
     }
     .typing-cursor.hidden { display: none; }
  
-    /* ── Hero fly-in for content after typing ── */
     @keyframes flyIn {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -66,7 +64,6 @@
     .hero-after.animate.delay-2 { animation-delay: 0.14s; }
     .hero-after.animate.delay-3 { animation-delay: 0.22s; }
     .hero-after.animate.delay-4 { animation-delay: 0.30s; }
-    /* When animation ends, leave them visible */
     .hero-after.done {
       opacity: 1;
     }
@@ -89,6 +86,7 @@
       * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal { opacity: 1 !important; transform: none !important; }
       .hero-after { opacity: 1 !important; }
+      .ticker-track { animation: none !important; }
     }
  
     :root {
@@ -414,6 +412,136 @@
       font-size: 14px;
       line-height: 1.6;
       color: rgba(255,255,255,0.78);
+    }
+ 
+    /* ─── NEWS TICKER ─── */
+    @keyframes tickerScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+ 
+    .news-ticker-wrap {
+      background: linear-gradient(90deg, var(--navy) 0%, var(--navy-2) 100%);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      position: relative;
+      padding: 0;
+    }
+    .news-ticker-wrap::before,
+    .news-ticker-wrap::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .news-ticker-wrap::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--navy), transparent);
+    }
+    .news-ticker-wrap::after {
+      right: 0;
+      background: linear-gradient(270deg, var(--navy), transparent);
+    }
+ 
+    .ticker-label {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      padding: 0 22px 0 20px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 100%);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--navy);
+      white-space: nowrap;
+      border-right: 1px solid rgba(0,0,0,0.1);
+    }
+    .ticker-label::after {
+      content: "";
+      position: absolute;
+      right: -10px; top: 0; bottom: 0;
+      width: 20px;
+      background: inherit;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+ 
+    .ticker-track-outer {
+      overflow: hidden;
+      padding-left: 170px;
+      height: 52px;
+    }
+ 
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      height: 52px;
+      animation: tickerScroll 36s linear infinite;
+      will-change: transform;
+    }
+    .ticker-track:hover {
+      animation-play-state: paused;
+    }
+ 
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 32px;
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: none;
+      color: rgba(255,255,255,0.88);
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s ease;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .ticker-item:hover { color: var(--gold-2); }
+    .ticker-item:last-child { border-right: none; }
+ 
+    .ticker-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .ticker-dot.live {
+      background: #4ade80;
+      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
+      animation: pulseGlow 1.8s ease-in-out infinite;
+    }
+    .ticker-dot.upcoming {
+      background: var(--gold-2);
+      box-shadow: 0 0 0 3px rgba(227,189,102,0.2);
+    }
+    .ticker-dot.new {
+      background: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96,165,250,0.2);
+    }
+ 
+    .ticker-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-right: 2px;
+    }
+    .ticker-tag.event {
+      background: rgba(227,189,102,0.18);
+      color: var(--gold-2);
+    }
+    .ticker-tag.apply {
+      background: rgba(96,165,250,0.18);
+      color: #93c5fd;
     }
  
     /* ─── CARDS ─── */
@@ -1032,6 +1160,8 @@
       .hero { padding-top: 42px; }
       .about-hero { padding: 56px 0 50px; }
       .container { width: min(var(--max), calc(100% - 24px)); }
+      .ticker-label { padding: 0 14px 0 14px; font-size: 9px; }
+      .ticker-track-outer { padding-left: 130px; }
     }
   </style>
 </head>
@@ -1078,17 +1208,14 @@
         <div class="container hero-inner">
           <div class="hero-copy">
  
-            <!-- Eyebrow typed first -->
             <div class="eyebrow" id="hero-eyebrow" style="min-height:1.5em;">
               <span id="eyebrow-text"></span><span class="typing-cursor" id="eyebrow-cursor"></span>
             </div>
  
-            <!-- H1 typed second -->
             <h1 class="serif" id="hero-h1" style="margin: 18px 0; min-height:2em;">
               <span id="h1-text"></span><span class="typing-cursor hidden" id="h1-cursor"></span>
             </h1>
  
-            <!-- Everything below flies in after typing completes -->
             <p class="hero-after delay-1">Path2Possibility connects students to mentorship, nonprofit experience, career exposure, and college guidance — building the support systems and opportunities too many students are forced to navigate without.</p>
             <div class="btn-row hero-after delay-2">
               <a class="btn btn-primary" href="#" onclick="showPage('contact');return false;">Join the Movement</a>
@@ -1130,6 +1257,16 @@
           </div>
         </div>
       </section>
+ 
+      <!-- ─── NEWS TICKER ─── -->
+      <div class="news-ticker-wrap">
+        <div class="ticker-label">Updates</div>
+        <div class="ticker-track-outer">
+          <div class="ticker-track" id="tickerTrack">
+            <!-- Items injected by JS so we can duplicate for seamless loop -->
+          </div>
+        </div>
+      </div>
  
       <section class="section dark-band" style="padding-top:80px; padding-bottom:80px;">
         <div class="container">
@@ -1479,15 +1616,9 @@
             </article>
             <article class="event-card reveal reveal-delay-1">
               <div class="badge gold">Upcoming</div>
-              <h3 class="serif">Dallas-Area College Workshop — Harvard Student Speakers</h3>
-              <p style="font-size:13px; color:var(--gold); font-weight:700; margin-bottom:12px;">Coming Soon · Dallas, TX</p>
-              <p>Our next major event will feature approximately 10 Harvard students speaking directly with high schoolers about their admissions experiences, campus life, and how they made it work. This is a unique, high-access opportunity for students across the Dallas area to hear from peers who've been through some of the most selective admissions processes in the country.</p>
-            </article>
-            <article class="event-card reveal reveal-delay-1">
-              <div class="badge dark">Future</div>
-              <h3 class="serif">Path2Partner Kickoff Events</h3>
-              <p style="font-size:13px; color:var(--gold); font-weight:700; margin-bottom:12px;">Ongoing Program Events</p>
-              <p>As our nonprofit partnerships grow, we'll host orientation events, capstone showcases, and community impact presentations — giving students a chance to share what they've built and organizations a chance to celebrate the talent they've worked alongside.</p>
+              <h3 class="serif">Path2Possibility DFW Kickoff</h3>
+              <p style="font-size:13px; color:var(--gold); font-weight:700; margin-bottom:12px;">Coming Soon · DFW Area</p>
+              <p>Our flagship DFW event brings together students, nonprofit partners, and mentors for a night that covers it all — college admissions insights from Harvard student speakers, an introduction to our Path2Partner nonprofit program, and a firsthand look at what Path2Possibility is building in this community. This is a chance to connect, learn, and get involved from the ground floor.</p>
             </article>
           </div>
         </div>
@@ -1593,20 +1724,83 @@
   </footer>
  
   <script>
+    /* ─── NEWS TICKER ─── */
+    const TICKER_ITEMS = [
+      {
+        tag: 'event',
+        tagLabel: 'Event',
+        dot: 'upcoming',
+        text: 'Path2Possibility DFW Kickoff — college guidance, nonprofit partnerships, and more. Coming soon to the DFW area.',
+        href: null,
+        onclick: "showPage('events');return false;"
+      },
+      {
+        tag: 'apply',
+        tagLabel: 'Apply Now',
+        dot: 'new',
+        text: 'College Advising Applications are open — get personalized college guidance from our team',
+        href: 'https://docs.google.com/forms/d/e/1FAIpQLScGHyWfigGGXbvcZNxq2UGDDlW8aAyPfimVXoMaIoJrl0A_MA/viewform?usp=header',
+        onclick: null
+      },
+      {
+        tag: 'event',
+        tagLabel: 'Event',
+        dot: 'upcoming',
+        text: 'Path2Possibility DFW Kickoff — meet nonprofit partners, explore mentorship, and connect with what we\'re building.',
+        href: null,
+        onclick: "showPage('events');return false;"
+      },
+      {
+        tag: 'apply',
+        tagLabel: 'Applications',
+        dot: 'new',
+        text: 'Apply for one-on-one college advising with Path2Possibility mentors — spots are limited',
+        href: 'https://docs.google.com/forms/d/e/1FAIpQLScGHyWfigGGXbvcZNxq2UGDDlW8aAyPfimVXoMaIoJrl0A_MA/viewform?usp=header',
+        onclick: null
+      },
+    ];
+ 
+    function buildTicker() {
+      const track = document.getElementById('tickerTrack');
+      if (!track) return;
+ 
+      // Build items twice for seamless infinite loop
+      const allItems = [...TICKER_ITEMS, ...TICKER_ITEMS];
+      track.innerHTML = '';
+ 
+      allItems.forEach(item => {
+        const el = document.createElement('a');
+        el.className = 'ticker-item';
+ 
+        if (item.href) {
+          el.href = item.href;
+          el.target = '_blank';
+          el.rel = 'noopener noreferrer';
+        } else {
+          el.href = '#';
+          el.setAttribute('onclick', item.onclick);
+        }
+ 
+        el.innerHTML = `
+          <span class="ticker-tag ${item.tag}">${item.tagLabel}</span>
+          <span class="ticker-dot ${item.dot}"></span>
+          <span>${item.text}</span>
+          ${item.href ? '<span style="font-size:12px; opacity:0.55; margin-left:4px;">↗</span>' : ''}
+        `;
+ 
+        track.appendChild(el);
+      });
+    }
+ 
+    buildTicker();
+ 
     /* ─── TYPING ANIMATION ─── */
- 
-    // The two strings to type
     const EYEBROW_TEXT = "A Student-Led Network for Student Opportunity";
- 
-    // H1 has two lines with an accent on the second
-    // We'll type it as plain text then swap in the HTML at the end
     const H1_LINE1 = "Turning potential";
     const H1_LINE2 = "into possibility.";
- 
-    // Speeds (ms per character)
     const EYEBROW_SPEED = 10;
     const H1_SPEED = 40;
-    const PAUSE_BETWEEN = 50; // pause after eyebrow before h1 starts
+    const PAUSE_BETWEEN = 50;
  
     let heroAnimated = false;
  
@@ -1632,20 +1826,15 @@
       const h1Text = document.getElementById('h1-text');
       const h1Cursor = document.getElementById('h1-cursor');
  
-      // Phase 1: type eyebrow
       typeText(eyebrowText, EYEBROW_TEXT, EYEBROW_SPEED, () => {
-        // Brief pause, then move cursor to h1
         setTimeout(() => {
           eyebrowCursor.classList.add('hidden');
           h1Cursor.classList.remove('hidden');
  
-          // Phase 2: type h1 line 1
           typeText(h1Text, H1_LINE1, H1_SPEED, () => {
-            // Insert line break + start line 2
             h1Text.innerHTML = 'Turning <span class="accent">potential</span><br>';
             const line2Span = document.createElement('span');
             h1Text.appendChild(line2Span);
-            // Move cursor after line2Span
             h1Text.appendChild(h1Cursor);
  
             let i = 0;
@@ -1654,11 +1843,9 @@
               i++;
               if (i >= H1_LINE2.length) {
                 clearInterval(interval);
-                // Replace with final HTML
                 setTimeout(() => {
                   h1Cursor.classList.add('hidden');
                   h1Text.innerHTML = 'Turning <span class="accent">potential</span><br>into <span class="accent">possibility.</span>';
-                  // Trigger fly-in for everything below
                   flyInHeroContent();
                 }, 320);
               }
@@ -1672,7 +1859,6 @@
       const els = document.querySelectorAll('#page-home .hero .hero-after');
       els.forEach(el => {
         el.classList.add('animate');
-        // After animation ends, mark as done so opacity stays 1
         el.addEventListener('animationend', () => {
           el.classList.add('done');
         }, { once: true });
@@ -1692,7 +1878,6 @@
       });
       setTimeout(initReveal, 50);
  
-      // Re-run typing if returning to home
       if (id === 'home' && !heroAnimated) {
         runHeroTyping();
       }
@@ -1749,11 +1934,8 @@
       }
     }
  
-    // Init
     document.querySelector('nav a[data-page="home"]').classList.add('active');
     initReveal();
- 
-    // Start typing on load
     runHeroTyping();
   </script>
 </body>
