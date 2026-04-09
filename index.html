@@ -1127,6 +1127,52 @@
     .footer-links a { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 600; }
     .footer-links a:hover { color: var(--gold-2); }
  
+    /* ─── NEWSLETTER ─── */
+    .newsletter-wrap {
+      border-radius: 32px;
+      background: linear-gradient(160deg, #102a4c, #08172d);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      padding: 52px 48px;
+      position: relative;
+    }
+    .newsletter-wrap::after {
+      content: "";
+      position: absolute;
+      right: -80px; top: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,162,74,0.18), transparent 70%);
+      pointer-events: none;
+    }
+    .newsletter-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .newsletter-field input {
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.07);
+      font: inherit;
+      font-size: 15px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .newsletter-field input::placeholder { color: rgba(255,255,255,0.38); }
+    .newsletter-field input:focus {
+      border-color: rgba(227,189,102,0.7);
+      box-shadow: 0 0 0 4px rgba(201,162,74,0.12);
+      background: rgba(255,255,255,0.1);
+    }
+ 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1100px) {
       .hero-inner, .split, .contact-grid, .grid-4,
@@ -1153,9 +1199,10 @@
       .events-grid, .involve-grid, .vision-grid,
       .partner-bottom, .form-grid, .reasons,
       .floating-cards, .stats-inner, .mission-vision-grid,
-      .grid-3 {
+      .grid-3, .newsletter-inner {
         grid-template-columns: 1fr;
       }
+      .newsletter-wrap { padding: 36px 24px; }
       .section { padding: 74px 0; }
       .hero { padding-top: 42px; }
       .about-hero { padding: 56px 0 50px; }
@@ -1357,6 +1404,32 @@
           </div>
         </div>
       </section>
+ 
+      <!-- ─── NEWSLETTER ─── -->
+      <section class="section" style="padding-top:80px; padding-bottom:80px; background:linear-gradient(180deg,#fbfaf7 0%,#f5f1e7 100%);">
+        <div class="container">
+          <div class="newsletter-wrap reveal">
+            <div class="newsletter-inner">
+              <div class="newsletter-copy">
+                <div class="eyebrow">Stay in the Loop</div>
+                <h2 class="serif" style="margin:14px 0 14px; font-size:clamp(1.8rem,3.5vw,3rem); line-height:1.08; letter-spacing:-0.04em; color:var(--white);">Stay Connected to <span style="color:var(--gold-2);">New Opportunities</span></h2>
+                <p style="margin:0; font-size:16px; line-height:1.85; color:rgba(255,255,255,0.72); max-width:480px;">Get updates on Path2College advising, workshops, career panels, nonprofit opportunities, and future Path2Possibility programs — delivered straight to your inbox.</p>
+                <p style="margin:18px 0 0; font-size:13px; color:rgba(255,255,255,0.42); font-weight:600; letter-spacing:0.04em;">No spam. Just meaningful updates.</p>
+              </div>
+              <div class="newsletter-form-wrap">
+                <form id="newsletterForm" onsubmit="submitNewsletter(event)">
+                  <div class="newsletter-field">
+                    <input id="newsletterEmail" name="email" type="email" placeholder="Enter your email address" required />
+                  </div>
+                  <button class="btn btn-primary" id="newsletterBtn" type="submit" style="width:100%; margin-top:12px; padding:16px 22px; font-size:15px;">Get Updates</button>
+                  <p id="newsletterStatus" style="margin:14px 0 0; font-size:14px; font-weight:600; color:var(--gold-2); min-height:1.4em; text-align:center;"></p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+ 
     </div>
  
     <!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
@@ -1937,6 +2010,24 @@
     document.querySelector('nav a[data-page="home"]').classList.add('active');
     initReveal();
     runHeroTyping();
+    async function submitNewsletter(event) {
+      event.preventDefault();
+      const btn = document.getElementById('newsletterBtn');
+      const status = document.getElementById('newsletterStatus');
+      const email = document.getElementById('newsletterEmail').value;
+      btn.disabled = true;
+      btn.textContent = 'Signing up...';
+      status.textContent = '';
+      // TODO: connect to your email platform (Mailchimp, ConvertKit, etc.)
+      // For now, simulates success after a brief delay
+      await new Promise(r => setTimeout(r, 900));
+      document.getElementById('newsletterForm').reset();
+      status.textContent = "You're in. We'll be in touch with what matters.";
+      btn.textContent = 'Get Updates';
+      btn.disabled = false;
+    }
+ 
   </script>
 </body>
 </html>
+ 
